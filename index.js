@@ -10,35 +10,37 @@ ok
 const countText = document.querySelector('#countText')
 const input = document.querySelector('#input')
 const enter = document.querySelector('#enter')
+const reset = document.querySelector('#reset')
 const logs = document.querySelector('#logs')
-const wrongInputAlert = document.querySelector('#wrongInputAlert')
 
 let count = 10
-const numbers = getRandomNumber()
+let numbers = getRandomNumber()
 countText.textContent = '도전 가능 횟수가 ' + count + '회 남았습니다.'
 
+reset.addEventListener('click', () => {
+    resetGame()
+})
+
 enter.addEventListener('click', () => {
+    let newLog = document.createElement('div')
+    logs.prepend(newLog)
     if (isValidNumber(input.value)) {
-        compare(input.value)
-        let newLog = document.createElement('div')
-        logs.prepend(newLog)
         if (compare(input.value)[0] === 4) {
-            newLog.textContent = '승리!'
+            newLog.textContent = '승리+^0^+'
         } else {
-            newLog.textContent = compare(input.value)[0] + 'S' + compare(input.value)[1] + 'B'
+            newLog.textContent = compare(input.value)[0] + ' Strike ' + compare(input.value)[1] + ' Ball ' + ': ' + input.value
+            count--
         }
-        wrongInputAlert.textContent = ''
-
     } else {
-        wrongInputAlert.textContent = '잘못된 입력입니다.'
+        newLog.textContent = '잘못된 입력입니다ㅠ.ㅠ'
+    }
+    
+    if (count <= 0) {
+        newLog.textContent = '패배ㅠ.ㅠ'
+        count = 0
     }
 
-    count--
     countText.textContent = '도전 가능 횟수가 ' + count + '회 남았습니다.'
-    
-    if (count === 0) {
-        countText.textContent = '패배...'
-    }
 })
 
 function getRandomNumber() {
@@ -85,4 +87,16 @@ function isValidNumber(value) {
         }
     }
     return true
+}
+
+function resetGame() {
+    input.value = ''
+    numbers = getRandomNumber()
+    count = 10
+
+    countText.textContent = '도전 가능 횟수가 ' + count + '회 남았습니다.'
+
+    while (logs.hasChildNodes()) {
+        logs.removeChild(logs.childNodes[0])
+    }
 }
