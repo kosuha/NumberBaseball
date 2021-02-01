@@ -4,6 +4,7 @@ TODO
 10회 안에 정답을 못 맞춘 경우
 정답 맞춘 경우
 CSS
+ok
 */
 
 const countText = document.querySelector('#countText')
