@@ -55,8 +55,6 @@ function compare(inputValue) {
             strike++
         } else if (inputValue.indexOf(numbers[index]) !== -1) {
             ball++
-        } else {
-            //nothing
         }
     }
 
